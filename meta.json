@@ -1,0 +1,14 @@
+{
+    "schema":{
+        "dark":{
+            "background":"#363636",
+            "foreground":"#d9d9d9",
+            "highlight":"#d60000"
+        },
+        "light":{
+            "background":"#ffffff",
+            "foreground":"#212121",
+            "highlight":"#c40000"
+        }
+    } 
+}
