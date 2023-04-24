@@ -1,0 +1,19 @@
+{
+    "VERSION": "alpha0.1",
+    "SERVER":{
+        "FORMAT":"utf-8",
+        "PORT": 4200,
+        "HEADER": 1024,
+        "DISCONNECT": "!DISCONNECT"
+    },
+    "CLIENT":{
+        "groweryClient":{
+            "USERNAME":"groweryClient",
+            "PASSWORD":"admin"
+        },
+        "userClient":{
+            "USERNAME":"userClient",
+            "PASSWORD":"admin"
+        }
+    }
+}
