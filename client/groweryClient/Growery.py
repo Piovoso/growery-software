@@ -9,9 +9,9 @@ groweryCount = 1
 class Growery:
     def __init__(entryType:str = '%N'):
         if entryType == '%N':
-            Growery.main()
+            Growery.Main()
         elif entryType == '%S':
-            Growery.addSeed()
+            Growery.AddSeed()
 
     def Main():
         prefix = {

@@ -5,15 +5,5 @@
         "PORT": 4200,
         "HEADER": 1024,
         "DISCONNECT": "!DISCONNECT"
-    },
-    "CLIENT":{
-        "GroweryClient":{
-            "USERNAME":"GroweryClient",
-            "PASSWORD":"admin"
-        },
-        "UserClient":{
-            "USERNAME":"UserClient",
-            "PASSWORD":"admin"
-        }
     }
 }

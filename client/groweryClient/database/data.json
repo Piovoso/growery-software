@@ -1,19 +1,12 @@
 {
-    "version": "0.1",
+    "VERSION": "alpha0.1",
     "SERVER":{
         "FORMAT":"utf-8",
         "PORT": 4200,
         "HEADER": 1024,
         "DISCONNECT": "!DISCONNECT"
     },
-    "CLIENT":{
-        "GroweryClient":{
-            "USERNAME":"GroweryClient",
-            "PASSWORD":"admin"
-        },
-        "UserClient":{
-            "USERNAME":"UserClient",
-            "PASSWORD":"admin"
-        }
+    "GROWERY":{
+        "SEEDS": {}
     }
 }
