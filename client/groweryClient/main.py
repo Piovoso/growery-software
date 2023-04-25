@@ -25,14 +25,14 @@ while not connected:
     finally:
         client.close()
 
-class userClient:
+class UserClient:
     def __init__(self):
-        self.send('groweryClient')
+        self.send('GroweryClient')
         
         while connected:
             self.send(input('[CLIENT] '))
 
-    def send(self, msg):
+    def Send(self, msg):
         if msg:
             message = msg.encode(FORMAT)
             client.sendall(message)
@@ -44,4 +44,4 @@ class userClient:
                 client.close()
 
 if __name__ == '__main__':
-    client = userClient()
+    client = UserClient()

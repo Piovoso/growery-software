@@ -1,9 +1,9 @@
 import socket, threading, json, os, datetime
 
-class clientHandle:
+class ClientHandle:
     def __init__(self):
-        self.groweryClientList = []
-        self.userClientList = []
+        self.GroweryClientList = []
+        self.UserClientList = []
 
         with open(f'{os.path.dirname(__file__)}/database/data.json','r') as jsFile:
             self.metadata = json.load(jsFile)
@@ -24,29 +24,29 @@ class clientHandle:
             conn, addr = server.accept()
             clientType = conn.recv(self.HEADER).decode(self.FORMAT)
 
-            if clientType == 'userClient':
-                self.userClientList.append(addr)
+            if clientType == 'UserClient':
+                self.UserClientList.append(addr)
                 
                 conn.sendall('User client selected... Please Log in'.encode(self.FORMAT))
-                conn.sendall(str(len(self.groweryClientList)).encode(self.FORMAT))
-                userThread = threading.Thread(target=self.userClient, args=(conn, addr))
+                conn.sendall(str(len(self.GroweryClientList)).encode(self.FORMAT))
+                userThread = threading.Thread(target=self.UserClient, args=(conn, addr))
                 userThread.start()
 
-            elif clientType == 'groweryClient':
-                self.groweryClientList.append(addr)
+            elif clientType == 'GroweryClient':
+                self.GroweryClientList.append(addr)
 
                 conn.sendall('Growery client selected... Please Log in'.encode(self.FORMAT))
-                groweryThread = threading.Thread(target=self.groweryClient, args=(conn, addr))
+                groweryThread = threading.Thread(target=self.GroweryClient, args=(conn, addr))
                 groweryThread.start()
             
             else:
-                conn.sendall('incorrect Client type'.encode(self.FORMAT))
+                conn.sendall('Incorrect client type'.encode(self.FORMAT))
                 conn.close()
 
-    def userClient(self, user, addr):
+    def UserClient(self, user, addr):
         print(f'[{datetime.datetime.time(datetime.datetime.now())}] [NEW] {addr[0]}:{addr[1]} connected')
 
-        self.authentication(user)
+        self.Authentication(user)
 
         connected = True
         while connected:
@@ -54,7 +54,7 @@ class clientHandle:
                 msg = user.recv(self.HEADER).decode(self.FORMAT)
                 print(f'[{datetime.datetime.time(datetime.datetime.now())}] [{addr[0]}:{addr[1]}] {msg}')
                 if msg == 'activeGrowery':
-                    user.sendall(len(self.groweryClientList).encode(self.FORMAT))
+                    user.sendall(str(len(self.GroweryClientList)).encode(self.FORMAT))
                 elif msg == self.DISCONNECT:
                     connected = False
                     user.close()
@@ -65,10 +65,10 @@ class clientHandle:
                 print(f'[{datetime.datetime.time(datetime.datetime.now())}] [{addr[0]}:{addr[1]}] User exited unexpectedly')
                 user.close()
 
-    def groweryClient(self, growery, addr):
+    def GroweryClient(self, growery, addr):
         print(f'[{datetime.datetime.time(datetime.datetime.now())}] [NEW] {addr[0]}:{addr[1]} connected')
 
-        self.authentication(growery, 'groweryClient')
+        self.Authentication(growery, 'GroweryClient')
 
         connected = True
         while connected:
@@ -87,7 +87,7 @@ class clientHandle:
                 growery.close()
 
 
-    def authentication(self, client, clientType:str = 'userClient'):
+    def Authentication(self, client, clientType:str = 'UserClient'):
 
         USERNAME = self.metadata['CLIENT'][clientType]['USERNAME']
         PASSWORD = self.metadata['CLIENT'][clientType]['PASSWORD']
@@ -120,4 +120,4 @@ class clientHandle:
 
 if __name__ == '__main__':
     print(f'[{datetime.datetime.time(datetime.datetime.now())}] [SERVER] initializing...')
-    server = clientHandle()
+    server = ClientHandle()

@@ -1,5 +1,5 @@
 import tkinter as tk, json, socket, os, time
-from clientFunc import userClient
+from GrowerySocket import UserClient
 
 with open(f'{os.path.dirname(__file__)}/database/data.json','r') as jsFile:
     metadata = json.load(jsFile)
@@ -22,10 +22,9 @@ while not connected:
         time.sleep(10)
         pass
 
-
 class ClientLogin:
     def __init__(self):
-        try: userClient.send(client ,'userClient')
+        try: UserClient.Send(client ,'UserClient')
         except (ConnectionError):
             print(f'{ConnectionError}')
         self.root = tk.Tk()
@@ -33,12 +32,12 @@ class ClientLogin:
         self.root.title(f"PyMonitor Client {VERSION}")
         self.root.resizable(0,0)
 
-        ClientLogin.styling(self.root)
-        ClientLogin.login(self.root)
+        ClientLogin.Styling(self.root)
+        ClientLogin.Login(self.root)
 
         self.root.mainloop()
 
-    def login(self):
+    def Login(self):
         self.loginFrame = tk.Frame(self, background="#363636")
         self.loginFrame.place(relx=0, rely=0.75, relheight=0.25, relwidth=1)
 
@@ -56,17 +55,17 @@ class ClientLogin:
 
         self.loginButton = tk.Button(self.loginFrame, text="Login", background="#d60000",
                                      foreground="#d9d9d9", relief="flat",
-                                     command=lambda: ClientLogin.forward(self, client, f'{usr.get()},{psw.get()}'))
+                                     command=lambda: ClientLogin.Forward(self, client, f'{usr.get()},{psw.get()}'))
         self.loginButton.place(relx=0.05, rely=0.65, relheight=0.3, relwidth=0.9)
 
-    def styling(self):
+    def Styling(self):
         self.styleFrame = tk.Frame(self, background="#363636")
         self.styleFrame.place(relx=0, rely=0, relheight=0.75, relwidth=1)
-        self.activeGrowery = tk.Label(self.styleFrame, text=f'Active Groweries: {userClient.recieve(client, "activeGrowery")}')
+        self.activeGrowery = tk.Label(self.styleFrame, text=f'Active Groweries: {UserClient.Recieve(client, "activeGrowery")}')
         self.activeGrowery.place(relx=0, rely=0, relheight=0.2, relwidth=1)
     
-    def forward(self, client, message):
-        userClient.send(client, message)
+    def Forward(self, client, message):
+        UserClient.Send(client, message)
         self.destroy()
         ClientMonitor()
 
@@ -77,12 +76,12 @@ class ClientMonitor:
         self.root.title(f"PyMonitor Client {VERSION}")
         self.root.resizable(0,0)
 
-        ClientMonitor.notification(self.root)
-        ClientMonitor.main(self.root)
+        ClientMonitor.Notification(self.root)
+        ClientMonitor.Main(self.root)
 
         self.root.mainloop()
 
-    def notification(self):
+    def Notification(self):
         self.notificationFrame = tk.Frame(self, background="#363636")
         self.notificationFrame.place(relx=0, rely=0, relheight=0.05, relwidth=1)
 
@@ -92,21 +91,19 @@ class ClientMonitor:
         self.newSeed = tk.Button(self.notificationFrame, text="New Seed", background="#666", foreground="#d9d9d9", relief="groove")
         self.newSeed.place(relx=0.5, rely=0.05, relheight=0.9, relwidth=0.075)
 
-        self.exit =tk.Button(self.notificationFrame, text="Exit", background="#d60000", foreground="#d9d9d9", relief="groove", command=lambda: ClientMonitor.exit(self))
+        self.exit =tk.Button(self.notificationFrame, text="Exit", background="#d60000", foreground="#d9d9d9", relief="groove", command=lambda: ClientMonitor.Exit(self))
         self.exit.place(relx=0.949, rely=0.05, relheight=0.9, relwidth=0.05)
 
-    def main(self):
+    def Main(self):
         self.mainFrame = tk.Frame(self, background="#363636")
         self.mainFrame.place(relx=0, rely=0.05, relheight=0.95, relwidth=1)
-        self.temporaryButton = tk.Button(self, text='Test', command=lambda: userClient.send(client, 'UngaBunga'))
+        self.temporaryButton = tk.Button(self, text='Test', command=lambda: UserClient.Send(client, 'UngaBunga'))
         self.temporaryButton.place(relx=0.4, rely=0.4, relheight=0.2, relwidth=0.2)
     
-    def exit(self):
-        try:
-            userClient.send(client, DISCONNECT)
+    def Exit(self):
+        try: UserClient.Send(client, DISCONNECT)
         except (ConnectionAbortedError):
             print(f'ConnectionAbortedError: An established connection was aborted by the software in your host machine')
-        
         self.destroy()
 
 

@@ -7,12 +7,12 @@
         "DISCONNECT": "!DISCONNECT"
     },
     "CLIENT":{
-        "groweryClient":{
-            "USERNAME":"groweryClient",
+        "GroweryClient":{
+            "USERNAME":"GroweryClient",
             "PASSWORD":"admin"
         },
-        "userClient":{
-            "USERNAME":"userClient",
+        "UserClient":{
+            "USERNAME":"UserClient",
             "PASSWORD":"admin"
         }
     }
